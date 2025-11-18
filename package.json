@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "description": "TBC Platform - Service Provider Marketplace with Netlify Functions",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.1",
     "firebase-admin": "^13.6.0",
