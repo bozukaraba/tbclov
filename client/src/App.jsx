@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import CategoryGrid from './pages/CategoryGrid';
 import ProviderList from './pages/ProviderList';
+import ProviderDetail from './pages/ProviderDetail';
 import ProviderForm from './pages/ProviderForm';
 import AdminPanel from './pages/AdminPanel';
 
@@ -31,6 +32,10 @@ function App() {
             <Route 
               path="/providers" 
               element={<ProviderList country={selectedCountry} />} 
+            />
+            <Route 
+              path="/provider/:id" 
+              element={<ProviderDetail />} 
             />
             <Route 
               path="/apply" 

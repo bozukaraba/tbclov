@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import './ProviderList.css';
 
 function ProviderList({ country }) {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const categoryFromUrl = searchParams.get('category');
   
@@ -132,6 +133,7 @@ function ProviderList({ country }) {
       <div className="list-header">
         <h1>
           {country ? `${country === 'USA' ? '🇺🇸 Amerika' : '🇨🇦 Kanada'}` : 'Tüm'} Hizmet Sağlayıcılar
+          {categoryFromUrl && ` - ${categoryFromUrl}`}
         </h1>
         <p>{filteredProviders.length} hizmet sağlayıcı bulundu</p>
       </div>
@@ -174,30 +176,42 @@ function ProviderList({ country }) {
       ) : (
         <div className="providers-grid">
           {filteredProviders.map(provider => (
-            <div key={provider._id} className="provider-card">
-              {provider.image && (
-                <div className="provider-image">
+            <div 
+              key={provider._id} 
+              className="provider-card-new"
+              onClick={() => navigate(`/provider/${provider._id}`)}
+            >
+              <div className="provider-card-image">
+                {provider.image ? (
                   <img src={provider.image} alt={provider.name} />
-                </div>
-              )}
-              <div className="provider-content">
-                <div className="provider-header">
-                  <h3>{provider.name}</h3>
-                  <span className="provider-badge">{provider.category}</span>
-                </div>
-                <h4 className="provider-service">{provider.service}</h4>
-                <p className="provider-description">{provider.description}</p>
-                <div className="provider-footer">
-                  <div className="provider-location">
-                    📍 {provider.serviceArea}
+                ) : (
+                  <div className="provider-card-placeholder">
+                    {provider.name.charAt(0)}
                   </div>
-                  <div className="provider-contact">
-                    <a href={`tel:${provider.phone}`} className="contact-btn phone">
-                      📞 Ara
-                    </a>
-                    <a href={`mailto:${provider.email}`} className="contact-btn email">
-                      ✉️ Email
-                    </a>
+                )}
+              </div>
+              
+              <div className="provider-card-content">
+                <div className="provider-card-header">
+                  <h3>{provider.name}</h3>
+                  <span className="status-badge">Aktif</span>
+                </div>
+                
+                <div className="provider-card-location">
+                  📍 {provider.serviceArea}
+                </div>
+                
+                <p className="provider-card-description">
+                  {provider.description.length > 80 
+                    ? provider.description.substring(0, 80) + '...' 
+                    : provider.description}
+                </p>
+                
+                <div className="provider-card-footer">
+                  <div className="rating-badge">
+                    <span className="star">⭐</span>
+                    <span className="rating-number">4.8</span>
+                    <span className="rating-reviews">(45)</span>
                   </div>
                 </div>
               </div>
