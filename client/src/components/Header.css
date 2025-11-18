@@ -1,0 +1,161 @@
+.header {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  box-shadow: var(--shadow-lg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.country-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.country-btn {
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.country-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.country-btn.active {
+  background-color: white;
+  color: var(--primary-color);
+  border-color: white;
+}
+
+.logo {
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logo h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+
+.logo p {
+  font-size: 12px;
+  font-weight: 500;
+  margin: 2px 0 0 0;
+  opacity: 0.9;
+  letter-spacing: 2px;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-apply {
+  background-color: white;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.btn-apply:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px 16px;
+  }
+
+  .country-buttons {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .country-btn {
+    flex: 1;
+    max-width: 150px;
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .logo {
+    order: 2;
+  }
+
+  .logo h1 {
+    font-size: 28px;
+  }
+
+  .nav-menu {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .country-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .logo h1 {
+    font-size: 24px;
+  }
+
+  .nav-link {
+    font-size: 13px;
+  }
+}
