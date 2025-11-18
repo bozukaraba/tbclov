@@ -16,8 +16,9 @@ Amerika ve Kanada'daki hizmet sağlayıcıları bir araya getiren modern, respon
 ## Teknolojiler
 
 - **Frontend:** React, Vite
-- **Backend:** Node.js, Express
+- **Backend:** Netlify Serverless Functions
 - **Database:** Firebase Firestore
+- **Hosting:** Netlify
 - **Styling:** Modern CSS with CSS Variables
 
 ## Kurulum
@@ -38,56 +39,44 @@ npm install
    - Yeni proje oluşturun
    - Firestore Database'i aktif edin
    - Project Settings → Service Accounts → Generate New Private Key
-   - İndirilen JSON dosyasındaki bilgileri `.env` dosyasına ekleyin
+   - İndirilen JSON dosyasını saklayın
 
-4. `.env` dosyasını düzenleyin:
-```env
-PORT=3000
-NODE_ENV=production
-
-FIREBASE_PROJECT_ID=your-project-id
-FIREBASE_PRIVATE_KEY="your-private-key"
-FIREBASE_CLIENT_EMAIL=your-client-email@your-project-id.iam.gserviceaccount.com
-```
-
-5. Projeyi build edin:
+4. Yerel geliştirme:
 ```bash
-npm run build
-```
-
-6. Sunucuyu başlatın:
-```bash
-npm start
-```
-
-## Geliştirme Modu
-
-Frontend ve backend'i ayrı ayrı çalıştırmak için:
-
-```bash
-# Terminal 1 - Backend
 npm run dev
-
-# Terminal 2 - Frontend
-npm run client
 ```
 
-## Render ile Deploy
+## Netlify ile Deploy
 
-1. [Render.com](https://render.com)'da yeni bir Web Service oluşturun
-2. GitHub repository'sini bağlayın (bozukaraba/tbclov)
-3. Build Command: `npm install && npm run build`
-4. Start Command: `npm start`
-5. Environment Variables ekleyin:
-   - `FIREBASE_PROJECT_ID`: Firebase proje ID'niz
-   - `FIREBASE_PRIVATE_KEY`: Private key (tırnak içinde)
-   - `FIREBASE_CLIENT_EMAIL`: Service account email
-   - `NODE_ENV`: `production`
+### 1️⃣ Netlify'da Yeni Site Oluşturun:
 
-**Not:** Firebase Service Account JSON'ını tek environment variable olarak da ekleyebilirsiniz:
+1. [Netlify](https://app.netlify.com) hesabınıza giriş yapın
+2. **Add new site** → **Import an existing project**
+3. GitHub'dan repository'yi seçin: `bozukaraba/tbclov`
+4. Build ayarları otomatik algılanacak:
+   - **Build command**: `npm install && npm run build`
+   - **Publish directory**: `dist`
+
+### 2️⃣ Environment Variables Ekleyin:
+
+Netlify Dashboard → Site settings → Environment variables:
+
+```
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project.iam.gserviceaccount.com
+```
+
+**Alternatif:** Tek variable olarak:
 ```
 FIREBASE_SERVICE_ACCOUNT={"type":"service_account","project_id":"...","private_key":"...","client_email":"..."}
 ```
+
+### 3️⃣ Deploy Edin:
+
+- **Deploy site** butonuna tıklayın
+- Netlify otomatik olarak build ve deploy edecek
+- Birkaç dakika sonra siteniz yayında!
 
 ## Firebase Firestore Yapısı
 
@@ -113,13 +102,17 @@ FIREBASE_SERVICE_ACCOUNT={"type":"service_account","project_id":"...","private_k
 
 Aşağıdaki composite index'leri Firestore Console'dan oluşturun:
 - Collection: `providers`
-  - Fields: `country` (Ascending), `approved` (Ascending), `createdAt` (Descending)
-  - Fields: `category` (Ascending), `approved` (Ascending), `createdAt` (Descending)
+  - Fields: `country` (Ascending), `createdAt` (Descending)
+  - Fields: `approved` (Ascending), `createdAt` (Descending)
+  - Fields: `category` (Ascending), `createdAt` (Descending)
 
-## API Endpoints
+## API Endpoints (Netlify Functions)
+
+Tüm API istekleri `/.netlify/functions/api/` prefix'i ile çalışır:
 
 - `GET /api/providers` - Hizmet sağlayıcıları listele
   - Query params: `country`, `category`, `approved`
+- `GET /api/providers/:id` - Tek sağlayıcı detayı
 - `POST /api/providers` - Yeni başvuru
 - `PUT /api/providers/:id` - Başvuru güncelle/onayla
 - `DELETE /api/providers/:id` - Başvuru sil
@@ -129,11 +122,27 @@ Aşağıdaki composite index'leri Firestore Console'dan oluşturun:
 
 Admin paneline `/admin` adresinden erişilebilir. Burada bekleyen başvuruları onaylayabilir veya silebilirsiniz.
 
+## Proje Yapısı
+
+```
+├── client/
+│   └── src/
+│       ├── components/     # Header, Footer
+│       ├── pages/          # Home, ProviderList, ProviderForm, AdminPanel
+│       └── styles/         # Global CSS
+├── netlify/
+│   └── functions/
+│       └── api.js          # Serverless API endpoints
+├── netlify.toml            # Netlify yapılandırması
+└── vite.config.js          # Vite yapılandırması
+```
+
 ## Güvenlik Notları
 
 - `.env` dosyası asla Git'e eklenmemelidir
 - Firebase service account key'leri güvenli tutulmalıdır
-- Production'da environment variables Render dashboard'dan yönetilir
+- Production'da environment variables Netlify dashboard'dan yönetilir
+- API rate limiting Netlify tarafından otomatik yapılır
 
 ## Lisans
 
