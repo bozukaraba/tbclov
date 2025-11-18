@@ -108,7 +108,24 @@ const initializeFirebase = () => {
 
 export const handler = async (event, context) => {
   const db = initializeFirebase();
-  const path = event.path.replace('/.netlify/functions/api/', '').replace('/.netlify/functions/api', '');
+  
+  // Path parsing - Netlify redirects ile gelen path'i temizle
+  let path = event.path
+    .replace('/.netlify/functions/api/', '')
+    .replace('/.netlify/functions/api', '')
+    .replace('/api/', '')
+    .replace('/api', '');
+  
+  // Eğer path boşsa, ana endpoint
+  if (!path || path === '/') {
+    path = '';
+  }
+  
+  console.log('Request path:', event.path);
+  console.log('Parsed path:', path);
+  console.log('Method:', event.httpMethod);
+  console.log('Query params:', event.queryStringParameters);
+  
   const method = event.httpMethod;
 
   // CORS headers
