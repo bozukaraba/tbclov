@@ -7,7 +7,7 @@ function Home({ setSelectedCountry }) {
 
   const handleCountrySelect = (country) => {
     setSelectedCountry(country);
-    navigate('/providers');
+    navigate('/categories');
   };
 
   return (

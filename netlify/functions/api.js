@@ -58,7 +58,10 @@ export const handler = async (event, context) => {
         'Temizlik',
         'Nakliyat',
         'Bahçe Bakımı',
-        'Diğer'
+        'Emlak',
+        'Fotoğrafçılık',
+        'Danışmanlık',
+        'Diğer Hizmetler'
       ];
       return {
         statusCode: 200,

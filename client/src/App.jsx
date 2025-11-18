@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import ProviderForm from './pages/ProviderForm';
+import CategoryGrid from './pages/CategoryGrid';
 import ProviderList from './pages/ProviderList';
+import ProviderForm from './pages/ProviderForm';
 import AdminPanel from './pages/AdminPanel';
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
             <Route 
               path="/" 
               element={<Home setSelectedCountry={setSelectedCountry} />} 
+            />
+            <Route 
+              path="/categories" 
+              element={<CategoryGrid country={selectedCountry} />} 
             />
             <Route 
               path="/providers" 

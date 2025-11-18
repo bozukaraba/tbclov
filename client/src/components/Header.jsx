@@ -27,7 +27,7 @@ function Header({ selectedCountry, setSelectedCountry }) {
         </Link>
         
         <nav className="nav-menu">
-          <Link to="/providers" className="nav-link">
+          <Link to="/categories" className="nav-link">
             Hizmet Sağlayıcılar
           </Link>
           <Link to="/apply" className="nav-link btn-apply">
