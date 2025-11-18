@@ -32,10 +32,28 @@ function ProviderForm({ country }) {
   const fetchCategories = async () => {
     try {
       const response = await fetch('/api/categories');
+      
+      if (!response.ok) {
+        throw new Error('Kategoriler yüklenemedi');
+      }
+      
       const data = await response.json();
-      setCategories(data);
+      setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Kategoriler yüklenemedi:', error);
+      // Fallback kategoriler
+      setCategories([
+        'Badana & Boya',
+        'Avukat',
+        'Web Tasarımcı',
+        'Tadilat & Tamirat',
+        'Elektrikçi',
+        'Tesisat',
+        'Temizlik',
+        'Nakliyat',
+        'Bahçe Bakımı',
+        'Diğer'
+      ]);
     }
   };
 
@@ -60,6 +78,7 @@ function ProviderForm({ country }) {
     setMessage(null);
 
     try {
+      // Şimdilik Firebase olmadan çalışması için basit bir response
       const formDataToSend = new FormData();
       Object.keys(formData).forEach(key => {
         if (formData[key]) {
@@ -69,30 +88,39 @@ function ProviderForm({ country }) {
 
       const response = await fetch('/api/providers', {
         method: 'POST',
-        body: formDataToSend
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
       });
+
+      if (!response.ok) {
+        throw new Error('Başvuru gönderilemedi');
+      }
 
       const data = await response.json();
 
-      if (response.ok) {
-        setMessage({ type: 'success', text: data.message });
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          category: '',
-          description: '',
-          serviceArea: '',
-          country: country || 'USA',
-          image: null
-        });
-        setTimeout(() => navigate('/'), 3000);
-      } else {
-        setMessage({ type: 'error', text: data.message });
-      }
+      setMessage({ type: 'success', text: data.message || 'Başvurunuz alındı! Onay sonrası listelenecektir.' });
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        category: '',
+        description: '',
+        serviceArea: '',
+        country: country || 'USA',
+        image: null
+      });
+      
+      // 3 saniye sonra anasayfaya yönlendir
+      setTimeout(() => navigate('/'), 3000);
     } catch (error) {
-      setMessage({ type: 'error', text: 'Bir hata oluştu. Lütfen tekrar deneyin.' });
+      console.error('Başvuru hatası:', error);
+      setMessage({ 
+        type: 'error', 
+        text: 'Başvurunuz şu anda gönderilemedi. Firebase bağlantısı yapılandırılıyor. Lütfen daha sonra tekrar deneyin.' 
+      });
     } finally {
       setLoading(false);
     }

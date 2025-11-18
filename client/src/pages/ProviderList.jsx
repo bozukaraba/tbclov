@@ -8,6 +8,7 @@ function ProviderList({ country }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchProviders();
@@ -20,6 +21,7 @@ function ProviderList({ country }) {
 
   const fetchProviders = async () => {
     setLoading(true);
+    setError(null);
     try {
       const params = new URLSearchParams({
         approved: 'true'
@@ -30,10 +32,17 @@ function ProviderList({ country }) {
       }
 
       const response = await fetch(`/api/providers?${params}`);
+      
+      if (!response.ok) {
+        throw new Error('API yanıt vermedi');
+      }
+      
       const data = await response.json();
-      setProviders(data);
+      setProviders(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Hizmet sağlayıcılar yüklenemedi:', error);
+      setError('Veriler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      setProviders([]);
     } finally {
       setLoading(false);
     }
@@ -42,10 +51,28 @@ function ProviderList({ country }) {
   const fetchCategories = async () => {
     try {
       const response = await fetch('/api/categories');
+      
+      if (!response.ok) {
+        throw new Error('Kategoriler yüklenemedi');
+      }
+      
       const data = await response.json();
-      setCategories(data);
+      setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Kategoriler yüklenemedi:', error);
+      // Fallback kategoriler
+      setCategories([
+        'Badana & Boya',
+        'Avukat',
+        'Web Tasarımcı',
+        'Tadilat & Tamirat',
+        'Elektrikçi',
+        'Tesisat',
+        'Temizlik',
+        'Nakliyat',
+        'Bahçe Bakımı',
+        'Diğer'
+      ]);
     }
   };
 
@@ -71,6 +98,21 @@ function ProviderList({ country }) {
     return (
       <div className="loading">
         <div className="spinner"></div>
+        <p style={{ marginTop: '20px', color: '#6b7280' }}>Yükleniyor...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="provider-list-container">
+        <div className="alert alert-error">
+          <h2>❌ Hata</h2>
+          <p>{error}</p>
+          <button className="btn btn-primary" onClick={fetchProviders}>
+            Tekrar Dene
+          </button>
+        </div>
       </div>
     );
   }
