@@ -1,152 +1,199 @@
 .home-container {
-  max-width: 100%;
-  padding: 0;
+  width: 100%;
+  min-height: 100vh;
 }
 
+/* Hero Section */
 .hero-section {
-  background: linear-gradient(135deg, #dc2626, #f97316);
+  background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
+  padding: 40px 16px 60px;
   color: white;
-  padding: 60px 20px;
-  text-align: center;
+}
+
+.hero-content {
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .hero-content h1 {
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 16px;
   line-height: 1.2;
+  margin: 0 0 16px 0;
+  text-align: center;
 }
 
-.hero-content p {
-  font-size: 18px;
-  margin-bottom: 40px;
-  opacity: 0.95;
+.hero-content > p {
+  font-size: 16px;
   line-height: 1.5;
+  margin: 0 0 40px 0;
+  text-align: center;
+  opacity: 0.95;
 }
 
+/* Country Selection Cards */
 .country-selection {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .country-card {
   background: white;
-  color: var(--text-primary);
-  padding: 24px;
   border-radius: 16px;
+  padding: 24px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  border: 3px solid transparent;
-  min-height: 88px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  font-size: 24px;
-  font-weight: 600;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .country-card:active {
   transform: scale(0.98);
 }
 
-.country-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  border-color: var(--primary-color);
+.country-info h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.country-info p {
+  font-size: 15px;
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.view-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #dc2626, #f97316);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 52px;
+}
+
+.view-btn:active {
+  transform: scale(0.98);
+}
+
+/* Features Section */
 .features-section {
-  padding: 48px 20px;
+  padding: 60px 16px;
   background: white;
 }
 
 .features-section h2 {
   text-align: center;
-  font-size: 26px;
-  color: var(--text-primary);
-  margin-bottom: 32px;
+  font-size: 28px;
   font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 40px 0;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 20px;
   max-width: 100%;
-  margin: 0 auto;
 }
 
 .feature-card {
-  background: var(--background);
-  padding: 28px 20px;
+  background: #f9fafb;
+  padding: 32px 24px;
   border-radius: 16px;
   text-align: center;
-  border: 2px solid var(--border-color);
-  transition: all 0.3s ease;
-}
-
-.feature-card:active {
-  transform: scale(0.98);
+  border: 2px solid #e5e7eb;
 }
 
 .feature-icon {
   font-size: 48px;
-  margin-bottom: 16px;
   display: block;
+  margin-bottom: 16px;
 }
 
 .feature-card h3 {
   font-size: 18px;
-  color: var(--text-primary);
-  margin-bottom: 12px;
   font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 12px 0;
 }
 
 .feature-card p {
-  color: var(--text-secondary);
-  line-height: 1.6;
   font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
 }
 
+/* CTA Section */
 .cta-section {
   background: linear-gradient(135deg, #fee2e2, #fed7aa);
-  padding: 60px 20px;
+  padding: 60px 16px;
   text-align: center;
 }
 
 .cta-section h2 {
-  font-size: 26px;
-  color: var(--text-primary);
-  margin-bottom: 16px;
+  font-size: 28px;
   font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 12px 0;
 }
 
 .cta-section p {
   font-size: 16px;
-  color: var(--text-secondary);
-  margin-bottom: 32px;
+  color: #6b7280;
   line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+
+.btn-cta {
+  background: linear-gradient(135deg, #dc2626, #f97316);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-cta:active {
+  transform: scale(0.98);
 }
 
 /* Tablet */
 @media (min-width: 600px) {
   .hero-content h1 {
-    font-size: 38px;
+    font-size: 40px;
   }
 
-  .hero-content p {
-    font-size: 20px;
+  .hero-content > p {
+    font-size: 18px;
   }
 
   .country-selection {
     flex-direction: row;
-    max-width: 600px;
+    gap: 20px;
   }
 
   .country-card {
@@ -154,50 +201,69 @@
   }
 
   .features-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
   }
 }
 
 /* Desktop */
 @media (min-width: 1024px) {
   .hero-section {
-    padding: 100px 40px;
+    padding: 80px 40px 100px;
+  }
+
+  .hero-content {
+    max-width: 1200px;
   }
 
   .hero-content h1 {
     font-size: 48px;
   }
 
-  .hero-content p {
-    font-size: 22px;
+  .hero-content > p {
+    font-size: 20px;
+    margin-bottom: 60px;
   }
 
   .country-selection {
-    max-width: 700px;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 24px;
+  }
+
+  .country-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .view-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
   }
 
   .features-section {
-    padding: 80px 40px;
+    padding: 100px 40px;
   }
 
   .features-section h2 {
-    font-size: 32px;
+    font-size: 36px;
+    margin-bottom: 60px;
   }
 
   .features-grid {
-    grid-template-columns: repeat(3, 1fr);
     max-width: 1200px;
+    margin: 0 auto;
     gap: 32px;
   }
 
   .feature-card {
-    padding: 36px 28px;
+    padding: 40px 32px;
   }
 
   .feature-card:hover {
     transform: translateY(-4px);
-    border-color: var(--primary-color);
-    box-shadow: var(--shadow-lg);
+    border-color: #dc2626;
+    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.1);
   }
 
   .cta-section {
@@ -210,5 +276,10 @@
 
   .cta-section p {
     font-size: 18px;
+  }
+
+  .btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
   }
 }
