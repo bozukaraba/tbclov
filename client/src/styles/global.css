@@ -1,35 +1,47 @@
+:root {
+  /* Kırmızı/Turuncu Renk Şeması */
+  --primary-color: #dc2626;
+  --secondary-color: #f97316;
+  --accent-color: #ea580c;
+  
+  /* Text Colors */
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  
+  /* Background Colors */
+  --background: #f9fafb;
+  --bg-secondary: #f3f4f6;
+  
+  /* Border & Shadow */
+  --border-color: #e5e7eb;
+  --shadow-sm: 0 1px 2px rgba(220, 38, 38, 0.05);
+  --shadow-md: 0 4px 6px rgba(220, 38, 38, 0.1);
+  --shadow-lg: 0 10px 15px rgba(220, 38, 38, 0.1);
+  --shadow-xl: 0 20px 25px rgba(220, 38, 38, 0.15);
+  
+  /* Utility Colors */
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --primary-color: #2563eb;
-  --secondary-color: #1e40af;
-  --accent-color: #3b82f6;
-  --success-color: #10b981;
-  --danger-color: #ef4444;
-  --warning-color: #f59e0b;
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --border-color: #e5e7eb;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-secondary);
+  background-color: var(--background);
   color: var(--text-primary);
   line-height: 1.6;
+  /* Mobil için optimize edilmiş font boyutu */
+  font-size: 16px;
 }
 
 .app {
@@ -40,86 +52,62 @@ body {
 
 .main-content {
   flex: 1;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
+  padding: 20px 16px;
+  max-width: 100%;
 }
 
-/* Buttons */
+/* Butonlar - Kırmızı tonlar */
 .btn {
   padding: 12px 24px;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-flex;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  /* Mobil için daha kolay tıklanabilir */
+  min-height: 44px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  text-decoration: none;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
 }
 
 .btn-primary {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-secondary {
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
   color: var(--text-primary);
   border: 2px solid var(--border-color);
 }
 
-.btn-success {
-  background-color: var(--success-color);
-  color: white;
+.btn-secondary:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
-.btn-danger {
-  background-color: var(--danger-color);
-  color: white;
+.btn-large {
+  padding: 14px 32px;
+  font-size: 16px;
+  min-height: 48px;
 }
 
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* Cards */
-.card {
-  background-color: var(--bg-primary);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
-}
-
-/* Forms */
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: var(--text-primary);
-  font-size: 14px;
-}
-
+/* Form elemanları - Mobil optimize */
 .form-input,
 .form-select,
 .form-textarea {
@@ -128,8 +116,11 @@ body {
   border: 2px solid var(--border-color);
   border-radius: 8px;
   font-size: 16px;
-  transition: all 0.3s ease;
-  font-family: inherit;
+  transition: all 0.3s;
+  background-color: white;
+  /* iOS'ta zoom'u önlemek için minimum 16px */
+  font-size: 16px;
+  min-height: 44px;
 }
 
 .form-input:focus,
@@ -137,39 +128,28 @@ body {
 .form-textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
 .form-textarea {
-  min-height: 120px;
   resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
 }
 
-/* Grid */
-.grid {
-  display: grid;
-  gap: 20px;
-}
-
-.grid-2 {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-
-.grid-3 {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
-/* Loading */
+/* Loading state */
 .loading {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 40px;
+  justify-content: center;
+  min-height: 300px;
+  padding: 40px 20px;
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border: 4px solid var(--border-color);
   border-top-color: var(--primary-color);
   border-radius: 50%;
@@ -180,168 +160,70 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Alert */
+/* Alert mesajları */
 .alert {
   padding: 16px 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.alert-success {
-  background-color: #d1fae5;
-  color: #065f46;
-  border-left: 4px solid var(--success-color);
+  border-radius: 12px;
+  margin: 20px 0;
+  font-size: 15px;
 }
 
 .alert-error {
   background-color: #fee2e2;
   color: #991b1b;
-  border-left: 4px solid var(--danger-color);
+  border: 2px solid #fecaca;
 }
 
-.alert-info {
-  background-color: #dbeafe;
-  color: #1e40af;
-  border-left: 4px solid var(--primary-color);
+.alert-success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 2px solid #a7f3d0;
 }
 
-/* Modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-  animation: fadeIn 0.3s ease;
+.alert-warning {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 2px solid #fde68a;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal {
-  background-color: var(--bg-primary);
-  border-radius: 16px;
-  padding: 32px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow-xl);
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.modal-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: var(--text-secondary);
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.modal-close:hover {
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-}
-
-/* Responsive */
+/* Mobil optimizasyonlar */
 @media (max-width: 768px) {
   .main-content {
-    padding: 16px;
-  }
-
-  .card {
-    padding: 20px;
+    padding: 16px 12px;
   }
 
   .btn {
-    padding: 10px 20px;
-    font-size: 14px;
+    width: 100%;
+    padding: 14px 20px;
   }
 
-  .modal {
-    padding: 24px;
-    margin: 16px;
-  }
-
-  .modal-title {
-    font-size: 20px;
+  .btn-large {
+    padding: 16px 24px;
   }
 }
 
 @media (max-width: 480px) {
-  .main-content {
-    padding: 12px;
+  body {
+    font-size: 15px;
   }
 
-  .card {
-    padding: 16px;
+  .main-content {
+    padding: 12px 8px;
   }
 
   .form-input,
   .form-select,
   .form-textarea {
-    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px 14px;
   }
 }
 
-/* Utility Classes */
-.text-center {
-  text-align: center;
+/* Touch optimizasyonu - daha büyük tıklama alanları */
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .form-input,
+  .form-select {
+    min-height: 48px;
+    font-size: 16px;
+  }
 }
-
-.mt-1 { margin-top: 8px; }
-.mt-2 { margin-top: 16px; }
-.mt-3 { margin-top: 24px; }
-.mt-4 { margin-top: 32px; }
-
-.mb-1 { margin-bottom: 8px; }
-.mb-2 { margin-bottom: 16px; }
-.mb-3 { margin-bottom: 24px; }
-.mb-4 { margin-bottom: 32px; }
-
-.p-1 { padding: 8px; }
-.p-2 { padding: 16px; }
-.p-3 { padding: 24px; }
-.p-4 { padding: 32px; }
