@@ -142,6 +142,22 @@ export const handler = async (event, context) => {
   }
 
   try {
+    // Debug endpoint
+    if (path === '' || path === '/' && method === 'GET') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ 
+          message: 'TBC API is working!',
+          requestPath: event.path,
+          parsedPath: path,
+          method: method,
+          hasFirebase: !!db,
+          mockDataCount: mockProviders.length
+        })
+      };
+    }
+
     // GET /api/categories
     if (path === 'categories' && method === 'GET') {
       const categories = [
@@ -159,6 +175,9 @@ export const handler = async (event, context) => {
         'Danışmanlık',
         'Diğer Hizmetler'
       ];
+      
+      console.log('Categories endpoint hit');
+      
       return {
         statusCode: 200,
         headers,
