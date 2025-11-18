@@ -1,5 +1,84 @@
 import admin from 'firebase-admin';
 
+// Mock data - Firebase yoksa kullanılacak
+const mockProviders = [
+  {
+    _id: '1',
+    name: 'Ahmet Yılmaz',
+    email: 'ahmet@example.com',
+    phone: '+1 (555) 123-4567',
+    service: 'Profesyonel Boya Badana Hizmeti',
+    category: 'Badana & Boya',
+    description: '15 yıllık tecrübemizle ev ve işyerlerinizde profesyonel boya badana hizmeti sunuyoruz. Kaliteli malzeme ve uygun fiyat garantisi.',
+    serviceArea: 'New York, Manhattan, Brooklyn',
+    country: 'USA',
+    image: null,
+    approved: true,
+    createdAt: new Date('2024-01-15'),
+    updatedAt: new Date('2024-01-15')
+  },
+  {
+    _id: '2',
+    name: 'Mehmet Kaya',
+    email: 'mehmet@example.com',
+    phone: '+1 (555) 234-5678',
+    service: 'Hukuki Danışmanlık',
+    category: 'Avukat',
+    description: 'Göçmenlik, iş hukuku ve aile hukuku konularında uzman avukatlık hizmeti. 20 yıllık tecrübe.',
+    serviceArea: 'Los Angeles, CA',
+    country: 'USA',
+    image: null,
+    approved: true,
+    createdAt: new Date('2024-01-16'),
+    updatedAt: new Date('2024-01-16')
+  },
+  {
+    _id: '3',
+    name: 'Ali Demir',
+    email: 'ali@example.com',
+    phone: '+1 (416) 345-6789',
+    service: 'Modern Web Tasarım',
+    category: 'Web Tasarımcı',
+    description: 'Responsive ve modern web siteleri tasarlıyoruz. E-ticaret, kurumsal ve kişisel web siteleri.',
+    serviceArea: 'Toronto, ON',
+    country: 'Canada',
+    image: null,
+    approved: true,
+    createdAt: new Date('2024-01-17'),
+    updatedAt: new Date('2024-01-17')
+  },
+  {
+    _id: '4',
+    name: 'Fatma Öztürk',
+    email: 'fatma@example.com',
+    phone: '+1 (555) 456-7890',
+    service: 'Elektrik Tesisatı',
+    category: 'Elektrikçi',
+    description: 'Lisanslı elektrikçi. Ev ve işyeri elektrik arızaları, yeni tesisat, panel montajı.',
+    serviceArea: 'Chicago, IL',
+    country: 'USA',
+    image: null,
+    approved: true,
+    createdAt: new Date('2024-01-18'),
+    updatedAt: new Date('2024-01-18')
+  },
+  {
+    _id: '5',
+    name: 'Can Arslan',
+    email: 'can@example.com',
+    phone: '+1 (416) 567-8901',
+    service: 'Tesisatçı',
+    category: 'Tesisat',
+    description: 'Su tesisatı, kalorifer, kombi bakım ve onarım hizmetleri. 7/24 acil servis.',
+    serviceArea: 'Vancouver, BC',
+    country: 'Canada',
+    image: null,
+    approved: true,
+    createdAt: new Date('2024-01-19'),
+    updatedAt: new Date('2024-01-19')
+  }
+];
+
 // Initialize Firebase Admin
 let db;
 const initializeFirebase = () => {
@@ -29,7 +108,7 @@ const initializeFirebase = () => {
 
 export const handler = async (event, context) => {
   const db = initializeFirebase();
-  const path = event.path.replace('/.netlify/functions/api/', '');
+  const path = event.path.replace('/.netlify/functions/api/', '').replace('/.netlify/functions/api', '');
   const method = event.httpMethod;
 
   // CORS headers
@@ -73,6 +152,29 @@ export const handler = async (event, context) => {
     // GET /api/providers
     if (path === 'providers' && method === 'GET') {
       const params = event.queryStringParameters || {};
+      
+      // Firebase yoksa mock data kullan
+      if (!db) {
+        let filtered = [...mockProviders];
+        
+        if (params.country) {
+          filtered = filtered.filter(p => p.country === params.country);
+        }
+        if (params.category) {
+          filtered = filtered.filter(p => p.category === params.category);
+        }
+        if (params.approved !== undefined) {
+          filtered = filtered.filter(p => p.approved === (params.approved === 'true'));
+        }
+        
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify(filtered)
+        };
+      }
+
+      // Firebase varsa normal işlem
       let query = db.collection('providers');
 
       if (params.country) {
@@ -105,6 +207,24 @@ export const handler = async (event, context) => {
     // GET /api/providers/:id
     if (path.startsWith('providers/') && method === 'GET') {
       const id = path.split('/')[1];
+      
+      // Firebase yoksa mock data kullan
+      if (!db) {
+        const provider = mockProviders.find(p => p._id === id);
+        if (!provider) {
+          return {
+            statusCode: 404,
+            headers,
+            body: JSON.stringify({ message: 'Hizmet sağlayıcı bulunamadı' })
+          };
+        }
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify(provider)
+        };
+      }
+      
       const doc = await db.collection('providers').doc(id).get();
       
       if (!doc.exists) {
@@ -128,6 +248,24 @@ export const handler = async (event, context) => {
     // POST /api/providers
     if (path === 'providers' && method === 'POST') {
       const body = JSON.parse(event.body);
+      
+      // Firebase yoksa mock response
+      if (!db) {
+        return {
+          statusCode: 201,
+          headers,
+          body: JSON.stringify({
+            message: 'Başvurunuz alındı! Onay sonrası listelenecektir.',
+            provider: {
+              _id: Date.now().toString(),
+              ...body,
+              approved: false,
+              createdAt: new Date(),
+              updatedAt: new Date()
+            }
+          })
+        };
+      }
       
       const providerData = {
         name: body.name,
@@ -164,6 +302,17 @@ export const handler = async (event, context) => {
       const id = path.split('/')[1];
       const body = JSON.parse(event.body);
       
+      if (!db) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            message: 'Güncelleme başarılı (mock mode)',
+            provider: { _id: id, ...body }
+          })
+        };
+      }
+      
       const updateData = {
         ...body,
         updatedAt: admin.firestore.FieldValue.serverTimestamp()
@@ -188,6 +337,15 @@ export const handler = async (event, context) => {
     // DELETE /api/providers/:id
     if (path.startsWith('providers/') && method === 'DELETE') {
       const id = path.split('/')[1];
+      
+      if (!db) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ message: 'Silme işlemi başarılı (mock mode)' })
+        };
+      }
+      
       await db.collection('providers').doc(id).delete();
 
       return {
