@@ -10,6 +10,8 @@ function CategoryGrid({ country }) {
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [featuredProviders, setFeaturedProviders] = useState([]);
+  const [loadingFeatured, setLoadingFeatured] = useState(true);
 
   // Slider içerikleri
   const slides = [
@@ -47,7 +49,8 @@ function CategoryGrid({ country }) {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+    fetchFeaturedProviders();
+  }, [country]);
 
   // Slider otomatik geçiş
   useEffect(() => {
@@ -101,6 +104,35 @@ function CategoryGrid({ country }) {
     }
   };
 
+  const fetchFeaturedProviders = async () => {
+    setLoadingFeatured(true);
+    try {
+      const params = new URLSearchParams({
+        approved: 'true',
+        country: country
+      });
+
+      const response = await fetch(`/api/providers?${params}`);
+      if (response.ok) {
+        const data = await response.json();
+        // Son eklenen 10 profesyoneli al
+        const sortedData = data.sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB - dateA;
+        });
+        setFeaturedProviders(sortedData.slice(0, 10));
+      } else {
+        setFeaturedProviders([]);
+      }
+    } catch (error) {
+      console.error('Featured providers yüklenemedi:', error);
+      setFeaturedProviders([]);
+    } finally {
+      setLoadingFeatured(false);
+    }
+  };
+
   const handleCategoryClick = async (category) => {
     setSelectedCategory(category);
     setShowModal(true);
@@ -126,6 +158,14 @@ function CategoryGrid({ country }) {
     setShowModal(false);
     setSelectedCategory(null);
     setProviders([]);
+  };
+
+  const handleViewAllProviders = () => {
+    navigate('/providers');
+  };
+
+  const handleProviderClick = (providerId) => {
+    navigate(`/provider/${providerId}`);
   };
 
   return (
@@ -187,6 +227,68 @@ function CategoryGrid({ country }) {
             <h3 className="category-title">{category}</h3>
           </div>
         ))}
+      </div>
+
+      {/* Featured Providers Section */}
+      <div className="featured-section">
+        <div className="featured-header">
+          <h2>✨ Son Eklenen Profesyoneller</h2>
+          <button className="view-all-btn" onClick={handleViewAllProviders}>
+            Tümünü Gör →
+          </button>
+        </div>
+
+        {loadingFeatured ? (
+          <div className="loading">
+            <div className="spinner"></div>
+          </div>
+        ) : featuredProviders.length > 0 ? (
+          <>
+            <div className="featured-scroll-container">
+              <div className="featured-providers">
+                {featuredProviders.map((provider) => (
+                  <div
+                    key={provider._id}
+                    className="featured-card"
+                    onClick={() => handleProviderClick(provider._id)}
+                  >
+                    <div className="featured-image">
+                      {provider.image ? (
+                        <img src={provider.image} alt={provider.name} />
+                      ) : (
+                        <div className="featured-image-placeholder">
+                          {provider.name.charAt(0).toUpperCase()}
+                        </div>
+                      )}
+                      <span className="featured-badge">YENİ</span>
+                    </div>
+                    <div className="featured-content">
+                      <h3 className="featured-name">{provider.name}</h3>
+                      <span className="featured-category">{provider.category}</span>
+                      <p className="featured-service">{provider.service}</p>
+                      <div className="featured-footer">
+                        <span className="featured-location">
+                          📍 {provider.serviceArea.split(',')[0]}
+                        </span>
+                        <div className="featured-rating">
+                          <span className="featured-star">⭐</span>
+                          <span className="featured-rating-value">4.8</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="scroll-indicator">
+              <span>← Kaydırın →</span>
+            </div>
+          </>
+        ) : (
+          <div className="no-providers">
+            <p>Henüz profesyonel eklenmemiş.</p>
+          </div>
+        )}
       </div>
 
       {/* Modal */}
