@@ -9,6 +9,23 @@ function CategoryGrid({ country }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Slider içerikleri
+  const slides = [
+    {
+      title: 'Profesyonel Hizmet Sağlayıcıları',
+      description: 'Güvenilir ve deneyimli hizmet sağlayıcılarıyla tanışın. İhtiyacınız olan her hizmet için en iyi profesyoneller burada!'
+    },
+    {
+      title: 'Kaliteli ve Hızlı Hizmet',
+      description: 'Bölgenizdeki en iyi hizmet sağlayıcılardan hızlıca teklif alın. 7/24 destek ve güvenli ödeme sistemi.'
+    },
+    {
+      title: 'Her Kategoride Uzman Ekip',
+      description: 'Badana, elektrik, tesisat, temizlik ve daha fazlası. Aradığınız hizmeti kolayca bulun ve iletişime geçin.'
+    }
+  ];
 
   // Kategori icon mapping
   const categoryIcons = {
@@ -31,6 +48,27 @@ function CategoryGrid({ country }) {
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  // Slider otomatik geçiş
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
 
   const fetchCategories = async () => {
     try {
@@ -92,6 +130,42 @@ function CategoryGrid({ country }) {
 
   return (
     <div className="category-grid-container">
+      {/* Hero Slider */}
+      <div className="hero-slider">
+        <div className="slider-container">
+          <div 
+            className="slider-track"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {slides.map((slide, index) => (
+              <div key={index} className="slider-slide">
+                <div className="slide-content">
+                  <h2>{slide.title}</h2>
+                  <p>{slide.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <button className="slider-nav prev" onClick={prevSlide}>
+            ‹
+          </button>
+          <button className="slider-nav next" onClick={nextSlide}>
+            ›
+          </button>
+          
+          <div className="slider-dots">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                className={`slider-dot ${currentSlide === index ? 'active' : ''}`}
+                onClick={() => goToSlide(index)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="category-header">
         <h1>
           {country === 'USA' ? '🇺🇸 Amerika' : country === 'Canada' ? '🇨🇦 Kanada' : ''} 
