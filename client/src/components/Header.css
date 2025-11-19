@@ -114,86 +114,78 @@
 /* Mobil */
 @media (max-width: 768px) {
   .header {
-    padding: 12px 0;
+    padding: 10px 0;
   }
 
   .header-content {
-    padding: 0 16px;
-    flex-direction: column;
-    gap: 12px;
+    padding: 0 12px;
+    gap: 0;
+    min-height: 56px;
   }
 
-  .country-buttons {
-    order: 1;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 8px;
-  }
-
-  .country-btn {
-    flex: 1;
-    max-width: 150px;
-    padding: 8px 16px;
-    font-size: 13px;
-  }
-
-  /* Logo ve Nav Menu yan yana */
   .logo {
-    order: 2;
-    justify-content: flex-start;
+    flex: 1;
+    min-width: 0;
   }
 
   .logo h1 {
-    font-size: 22px;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .logo p {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .nav-menu {
-    order: 3;
-    width: 100%;
-    justify-content: flex-end;
-    margin-top: 8px;
+    flex-shrink: 0;
   }
 
   .nav-link {
-    font-size: 14px;
+    font-size: 13px;
     padding: 6px 12px;
   }
 
   .btn-apply {
-    padding: 8px 20px;
-    font-size: 14px;
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  .country-buttons {
+    gap: 8px;
+  }
+
+  .country-btn {
+    padding: 8px 16px;
+    font-size: 12px;
   }
 }
 
 @media (max-width: 480px) {
   .header {
-    padding: 10px 0;
+    padding: 8px 0;
   }
 
-  .country-btn {
-    padding: 8px 12px;
-    font-size: 12px;
+  .header-content {
+    padding: 0 10px;
+    min-height: 50px;
   }
 
   .logo h1 {
-    font-size: 20px;
-  }
-
-  .logo p {
-    font-size: 12px;
-  }
-
-  .nav-link {
-    font-size: 13px;
+    font-size: 18px;
   }
 
   .btn-apply {
-    padding: 8px 18px;
-    font-size: 14px;
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+
+  .country-btn {
+    padding: 6px 12px;
+    font-size: 11px;
   }
 }
 
