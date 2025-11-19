@@ -12,7 +12,7 @@
   margin: 0 auto;
   padding: 0 16px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 24px;
   flex-direction: row;
@@ -55,8 +55,7 @@
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 6px;
-  justify-content: center;
+  justify-content: flex-start;
   flex-shrink: 0;
 }
 
@@ -79,7 +78,7 @@
 .nav-menu {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   flex-shrink: 0;
 }
 
@@ -120,7 +119,7 @@
 
   .header-content {
     padding: 0 16px;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 12px;
   }
 
@@ -138,13 +137,14 @@
     font-size: 13px;
   }
 
+  /* Logo ve Nav Menu yan yana */
   .logo {
     order: 2;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .logo h1 {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .logo p {
@@ -154,7 +154,7 @@
   .nav-menu {
     order: 3;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 8px;
   }
 
@@ -180,7 +180,7 @@
   }
 
   .logo h1 {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .logo p {
