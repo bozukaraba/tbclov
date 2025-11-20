@@ -4,15 +4,15 @@ import './Footer.css';
 function Footer() {
   const [activeModal, setActiveModal] = useState(null);
 
-  const narServices = [
-    { id: 'spotify', name: 'NAR-Spotify', icon: '🎵' },
-    { id: 'oyun', name: 'NAR-Oyun', icon: '🎮' },
-    { id: 'forum', name: 'NAR-Forum', icon: '💬' },
-    { id: 'bilet', name: 'NAR-Bilet', icon: '🎫' },
-    { id: 'mezun', name: 'NAR-Mezun', icon: '🎓' },
-    { id: 'dukkan', name: 'NAR-Dükkan', icon: '🛒' },
-    { id: 'din', name: 'NAR-Din', icon: '🕌' },
-    { id: 'activity', name: 'NAR-Activity', icon: '⚽' }
+  const tbcServices = [
+    { id: 'spotify', name: 'TBC-Spotify', icon: '🎵' },
+    { id: 'oyun', name: 'TBC-Oyun', icon: '🎮' },
+    { id: 'forum', name: 'TBC-Forum', icon: '💬' },
+    { id: 'bilet', name: 'TBC-Bilet', icon: '🎫' },
+    { id: 'mezun', name: 'TBC-Mezun', icon: '🎓' },
+    { id: 'dukkan', name: 'TBC-Dükkan', icon: '🛒' },
+    { id: 'din', name: 'TBC-Din', icon: '🕌' },
+    { id: 'activity', name: 'TBC-Activity', icon: '⚽' }
   ];
 
   const openModal = (serviceId) => {
@@ -28,7 +28,7 @@ function Footer() {
       <footer className="footer">
         <div className="footer-content">
           <div className="tbc-services">
-            {narServices.map(service => (
+            {tbcServices.map(service => (
               <button
                 key={service.id}
                 className="tbc-service-btn"
@@ -50,8 +50,8 @@ function Footer() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2 className="modal-title">
-                {narServices.find(s => s.id === activeModal)?.icon} {' '}
-                {narServices.find(s => s.id === activeModal)?.name}
+                {tbcServices.find(s => s.id === activeModal)?.icon} {' '}
+                {tbcServices.find(s => s.id === activeModal)?.name}
               </h2>
               <button className="modal-close" onClick={closeModal}>
                 &times;
