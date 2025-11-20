@@ -12,6 +12,32 @@ function CategoryGrid({ country }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [featuredProviders, setFeaturedProviders] = useState([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
+  
+  // Yeni state'ler: Eyalet yönetimi için
+  const [showStates, setShowStates] = useState(true);
+  const [selectedState, setSelectedState] = useState(null);
+  const [states, setStates] = useState([]);
+
+  // Eyalet verileri
+  const usaStates = [
+    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
+    'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
+    'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+    'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada',
+    'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
+    'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon',
+    'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota',
+    'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
+    'West Virginia', 'Wisconsin', 'Wyoming'
+  ];
+
+  const canadaProvinces = [
+    'Alberta', 'British Columbia', 'Manitoba', 'New Brunswick',
+    'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia',
+    'Nunavut', 'Ontario', 'Prince Edward Island', 'Quebec', 'Saskatchewan',
+    'Yukon'
+  ];
 
   // Slider içerikleri
   const slides = [
@@ -48,9 +74,25 @@ function CategoryGrid({ country }) {
   };
 
   useEffect(() => {
+    // Ülkeye göre eyaletleri ayarla
+    if (country === 'USA') {
+      setStates(usaStates);
+    } else if (country === 'Canada') {
+      setStates(canadaProvinces);
+    }
+    
+    // Ülke değiştiğinde eyalet seçimini sıfırla
+    setShowStates(true);
+    setSelectedState(null);
     fetchCategories();
-    fetchFeaturedProviders();
   }, [country]);
+
+  useEffect(() => {
+    // Eyalet seçildikten sonra featured providers'ı yükle
+    if (selectedState) {
+      fetchFeaturedProviders();
+    }
+  }, [selectedState, country]);
 
   // Slider otomatik geçiş
   useEffect(() => {
@@ -105,11 +147,14 @@ function CategoryGrid({ country }) {
   };
 
   const fetchFeaturedProviders = async () => {
+    if (!selectedState) return;
+    
     setLoadingFeatured(true);
     try {
       const params = new URLSearchParams({
         approved: 'true',
-        country: country
+        country: country,
+        state: selectedState
       });
 
       const response = await fetch(`/api/providers?${params}`);
@@ -133,13 +178,31 @@ function CategoryGrid({ country }) {
     }
   };
 
+  const handleStateClick = (state) => {
+    setSelectedState(state);
+    setShowStates(false);
+  };
+
+  const handleBackToStates = () => {
+    setShowStates(true);
+    setSelectedState(null);
+    setFeaturedProviders([]);
+  };
+
   const handleCategoryClick = async (category) => {
     setSelectedCategory(category);
     setShowModal(true);
     setLoading(true);
     
     try {
-      const response = await fetch(`/api/providers?category=${encodeURIComponent(category)}&country=${country}&approved=true`);
+      const params = new URLSearchParams({
+        category: category,
+        country: country,
+        state: selectedState,
+        approved: 'true'
+      });
+      
+      const response = await fetch(`/api/providers?${params}`);
       if (response.ok) {
         const data = await response.json();
         setProviders(data);
@@ -161,7 +224,7 @@ function CategoryGrid({ country }) {
   };
 
   const handleViewAllProviders = () => {
-    navigate('/providers');
+    navigate(`/providers?country=${country}&state=${selectedState}`);
   };
 
   const handleProviderClick = (providerId) => {
@@ -206,90 +269,122 @@ function CategoryGrid({ country }) {
         </div>
       </div>
 
-      <div className="category-header">
-        <h1>
-          {country === 'USA' ? '🇺🇸 Amerika' : country === 'Canada' ? '🇨🇦 Kanada' : ''} 
-          {' '}Hizmet Kategorileri
-        </h1>
-        <p>Aradığınız hizmet kategorisini seçin</p>
-      </div>
-
-      <div className="categories-grid">
-        {categories.map((category) => (
-          <div
-            key={category}
-            className="category-card"
-            onClick={() => handleCategoryClick(category)}
-          >
-            <div className="category-icon">
-              {categoryIcons[category] || '📋'}
-            </div>
-            <h3 className="category-title">{category}</h3>
+      {/* Eyalet Seçimi veya Kategoriler */}
+      {showStates ? (
+        <div>
+          <div className="category-header">
+            <h1>
+              {country === 'USA' ? '🇺🇸 Amerika' : country === 'Canada' ? '🇨🇦 Kanada' : ''} 
+              {' '}Eyalet Seçimi
+            </h1>
+            <p>Hizmet almak istediğiniz eyaleti seçin</p>
           </div>
-        ))}
-      </div>
 
-      {/* Featured Providers Section */}
-      <div className="featured-section">
-        <div className="featured-header">
-          <h2>✨ Son Eklenen Profesyoneller</h2>
-          <button className="view-all-btn" onClick={handleViewAllProviders}>
-            Tümünü Gör →
-          </button>
+          <div className="categories-grid">
+            {states.map((state) => (
+              <div
+                key={state}
+                className="category-card state-card"
+                onClick={() => handleStateClick(state)}
+              >
+                <div className="category-icon">
+                  📍
+                </div>
+                <h3 className="category-title">{state}</h3>
+              </div>
+            ))}
+          </div>
         </div>
-
-        {loadingFeatured ? (
-          <div className="loading">
-            <div className="spinner"></div>
+      ) : (
+        <div>
+          <div className="category-header">
+            <button className="back-button" onClick={handleBackToStates}>
+              ← Eyalet Seçimine Dön
+            </button>
+            <h1>
+              {country === 'USA' ? '🇺🇸' : '🇨🇦'} {selectedState} - Hizmet Kategorileri
+            </h1>
+            <p>Aradığınız hizmet kategorisini seçin</p>
           </div>
-        ) : featuredProviders.length > 0 ? (
-          <>
-            <div className="featured-scroll-container">
-              <div className="featured-providers">
-                {featuredProviders.map((provider) => (
-                  <div
-                    key={provider._id}
-                    className="featured-card"
-                    onClick={() => handleProviderClick(provider._id)}
-                  >
-                    <div className="featured-image">
-                      {provider.image ? (
-                        <img src={provider.image} alt={provider.name} />
-                      ) : (
-                        <div className="featured-image-placeholder">
-                          {provider.name.charAt(0).toUpperCase()}
+
+          <div className="categories-grid">
+            {categories.map((category) => (
+              <div
+                key={category}
+                className="category-card"
+                onClick={() => handleCategoryClick(category)}
+              >
+                <div className="category-icon">
+                  {categoryIcons[category] || '📋'}
+                </div>
+                <h3 className="category-title">{category}</h3>
+              </div>
+            ))}
+          </div>
+
+          {/* Featured Providers Section */}
+          <div className="featured-section">
+            <div className="featured-header">
+              <h2>✨ Son Eklenen Profesyoneller</h2>
+              <button className="view-all-btn" onClick={handleViewAllProviders}>
+                Tümünü Gör →
+              </button>
+            </div>
+
+            {loadingFeatured ? (
+              <div className="loading">
+                <div className="spinner"></div>
+              </div>
+            ) : featuredProviders.length > 0 ? (
+              <>
+                <div className="featured-scroll-container">
+                  <div className="featured-providers">
+                    {featuredProviders.map((provider) => (
+                      <div
+                        key={provider._id}
+                        className="featured-card"
+                        onClick={() => handleProviderClick(provider._id)}
+                      >
+                        <div className="featured-image">
+                          {provider.image ? (
+                            <img src={provider.image} alt={provider.name} />
+                          ) : (
+                            <div className="featured-image-placeholder">
+                              {provider.name.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                          <span className="featured-badge">YENİ</span>
                         </div>
-                      )}
-                      <span className="featured-badge">YENİ</span>
-                    </div>
-                    <div className="featured-content">
-                      <h3 className="featured-name">{provider.name}</h3>
-                      <span className="featured-category">{provider.category}</span>
-                      <p className="featured-service">{provider.service}</p>
-                      <div className="featured-footer">
-                        <span className="featured-location">
-                          📍 {provider.serviceArea.split(',')[0]}
-                        </span>
-                        <div className="featured-rating">
-                          <span className="featured-star">⭐</span>
-                          <span className="featured-rating-value">4.8</span>
+                        <div className="featured-content">
+                          <h3 className="featured-name">{provider.name}</h3>
+                          <span className="featured-category">{provider.category}</span>
+                          <p className="featured-service">{provider.service}</p>
+                          <div className="featured-footer">
+                            <span className="featured-location">
+                              📍 {provider.serviceArea.split(',')[0]}
+                            </span>
+                            <div className="featured-rating">
+                              <span className="featured-star">⭐</span>
+                              <span className="featured-rating-value">4.8</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+                <div className="scroll-indicator">
+                  <span>← Kaydırın →</span>
+                </div>
+              </>
+            ) : (
+              <div className="no-providers">
+                <p>Henüz profesyonel eklenmemiş.</p>
               </div>
-            </div>
-            <div className="scroll-indicator">
-              <span>← Kaydırın →</span>
-            </div>
-          </>
-        ) : (
-          <div className="no-providers">
-            <p>Henüz profesyonel eklenmemiş.</p>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Modal */}
       {showModal && (
