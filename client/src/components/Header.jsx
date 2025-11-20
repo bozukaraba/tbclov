@@ -7,7 +7,7 @@ function Header() {
     <header className="header">
       <div className="header-content">
         <Link to="/" className="logo">
-          <h1>TBC Platform</h1>
+          <h1>NAR</h1>
         </Link>
         
         <nav className="nav-menu">

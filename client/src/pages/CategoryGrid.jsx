@@ -233,41 +233,43 @@ function CategoryGrid({ country }) {
 
   return (
     <div className="category-grid-container">
-      {/* Hero Slider */}
-      <div className="hero-slider">
-        <div className="slider-container">
-          <div 
-            className="slider-track"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {slides.map((slide, index) => (
-              <div key={index} className="slider-slide">
-                <div className="slide-content">
-                  <h2>{slide.title}</h2>
-                  <p>{slide.description}</p>
+      {/* Hero Slider - Sadece kategoriler sayfasında göster */}
+      {!showStates && (
+        <div className="hero-slider">
+          <div className="slider-container">
+            <div 
+              className="slider-track"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            >
+              {slides.map((slide, index) => (
+                <div key={index} className="slider-slide">
+                  <div className="slide-content">
+                    <h2>{slide.title}</h2>
+                    <p>{slide.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          
-          <button className="slider-nav prev" onClick={prevSlide}>
-            ‹
-          </button>
-          <button className="slider-nav next" onClick={nextSlide}>
-            ›
-          </button>
-          
-          <div className="slider-dots">
-            {slides.map((_, index) => (
-              <button
-                key={index}
-                className={`slider-dot ${currentSlide === index ? 'active' : ''}`}
-                onClick={() => goToSlide(index)}
-              />
-            ))}
+              ))}
+            </div>
+            
+            <button className="slider-nav prev" onClick={prevSlide}>
+              ‹
+            </button>
+            <button className="slider-nav next" onClick={nextSlide}>
+              ›
+            </button>
+            
+            <div className="slider-dots">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  className={`slider-dot ${currentSlide === index ? 'active' : ''}`}
+                  onClick={() => goToSlide(index)}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Eyalet Seçimi veya Kategoriler */}
       {showStates ? (
