@@ -1,6 +1,6 @@
 .header {
-  background: linear-gradient(135deg, #E8461A, #f26b3a);
-  box-shadow: 0 2px 12px rgba(232, 70, 26, 0.15);
+  background: linear-gradient(135deg, #e9373a, #ff5c5f);
+  box-shadow: 0 2px 12px rgba(233, 55, 58, 0.15);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -102,7 +102,7 @@
 
 .btn-apply {
   background: white;
-  color: #E8461A;
+  color: #e9373a;
   padding: 10px 24px;
   border-radius: 10px;
   font-weight: 600;
