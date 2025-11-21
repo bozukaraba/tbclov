@@ -7,6 +7,7 @@ function Header() {
     <header className="header">
       <div className="header-content">
         <Link to="/" className="logo">
+          <img src="/nar-logo.png" alt="NAR Logo" className="logo-image" />
           <h1>NAR</h1>
         </Link>
         
