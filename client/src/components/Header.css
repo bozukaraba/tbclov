@@ -1,6 +1,6 @@
 .header {
-  background: linear-gradient(135deg, #f97316, #fb923c);
-  box-shadow: 0 2px 12px rgba(249, 115, 22, 0.15);
+  background: linear-gradient(135deg, #E8461A, #f26b3a);
+  box-shadow: 0 2px 12px rgba(232, 70, 26, 0.15);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -57,11 +57,10 @@
   align-items: center;
   justify-content: flex-start;
   flex-shrink: 0;
-  gap: 12px;
 }
 
 .logo-image {
-  height: 40px;
+  height: 50px;
   width: auto;
   display: block;
 }
@@ -103,7 +102,7 @@
 
 .btn-apply {
   background: white;
-  color: #dc2626;
+  color: #E8461A;
   padding: 10px 24px;
   border-radius: 10px;
   font-weight: 600;

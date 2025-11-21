@@ -1,8 +1,8 @@
 :root {
-  /* Turuncu Renk Şeması */
-  --primary-color: #f97316;
-  --secondary-color: #fb923c;
-  --accent-color: #ea580c;
+  /* Logodaki Kırmızı Renk Şeması */
+  --primary-color: #E8461A;
+  --secondary-color: #f26b3a;
+  --accent-color: #d63c15;
   
   /* Text Colors */
   --text-primary: #1f2937;
@@ -14,10 +14,10 @@
   
   /* Border & Shadow */
   --border-color: #e5e7eb;
-  --shadow-sm: 0 1px 2px rgba(249, 115, 22, 0.05);
-  --shadow-md: 0 4px 6px rgba(249, 115, 22, 0.1);
-  --shadow-lg: 0 10px 15px rgba(249, 115, 22, 0.1);
-  --shadow-xl: 0 20px 25px rgba(249, 115, 22, 0.15);
+  --shadow-sm: 0 1px 2px rgba(232, 70, 26, 0.05);
+  --shadow-md: 0 4px 6px rgba(232, 70, 26, 0.1);
+  --shadow-lg: 0 10px 15px rgba(232, 70, 26, 0.1);
+  --shadow-xl: 0 20px 25px rgba(232, 70, 26, 0.15);
   
   /* Utility Colors */
   --success-color: #10b981;
