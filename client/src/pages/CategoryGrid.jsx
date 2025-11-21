@@ -407,7 +407,7 @@ function CategoryGrid({ country }) {
                       className="apply-now-btn"
                       onClick={() => {
                         closeModal();
-                        navigate('/provider-form');
+                        navigate('/apply');
                       }}
                     >
                       Hemen Başvur
