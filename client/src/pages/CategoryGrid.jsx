@@ -399,38 +399,20 @@ function CategoryGrid({ country }) {
                   <div className="spinner"></div>
                   <p>Yükleniyor...</p>
                 </div>
-              ) : providers.length > 0 ? (
-                <div className="providers-list">
-                  {providers.map((provider) => (
-                    <div 
-                      key={provider._id} 
-                      className="provider-item"
+              ) : (
+                <div className="ad-invitation">
+                  <div className="ad-invitation-content">
+                    <h3>Reklamın burada görünmesini ister misin?</h3>
+                    <button 
+                      className="apply-now-btn"
                       onClick={() => {
                         closeModal();
-                        navigate(`/provider/${provider._id}`);
+                        navigate('/provider-form');
                       }}
                     >
-                      <div className="provider-image">
-                        {provider.image ? (
-                          <img src={provider.image} alt={provider.name} />
-                        ) : (
-                          <div className="provider-placeholder">
-                            {provider.name.charAt(0).toUpperCase()}
-                          </div>
-                        )}
-                      </div>
-                      <div className="provider-info">
-                        <h3>{provider.name}</h3>
-                        <p className="provider-service">{provider.service}</p>
-                        <p className="provider-area">📍 {provider.serviceArea}</p>
-                      </div>
-                      <div className="provider-arrow">→</div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="no-providers">
-                  <p>Bu kategoride henüz hizmet sağlayıcı bulunmamaktadır.</p>
+                      Hemen Başvur
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

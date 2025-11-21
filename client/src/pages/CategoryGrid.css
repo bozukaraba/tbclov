@@ -873,3 +873,66 @@
 @media (min-width: 1024px) {
   /* ...existing desktop styles... */
 }
+
+/* Ad Invitation Styles */
+.ad-invitation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  padding: 40px 20px;
+}
+
+.ad-invitation-content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.ad-invitation-content h3 {
+  font-size: 24px;
+  color: var(--text-primary);
+  margin: 0 0 24px 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.apply-now-btn {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  display: inline-block;
+}
+
+.apply-now-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+}
+
+.apply-now-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+@media (max-width: 600px) {
+  .ad-invitation {
+    min-height: 250px;
+    padding: 30px 20px;
+  }
+
+  .ad-invitation-content h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .apply-now-btn {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+}
