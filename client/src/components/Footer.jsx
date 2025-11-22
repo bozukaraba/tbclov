@@ -15,7 +15,8 @@ function Footer() {
     { id: 'activity', name: 'NAR-Activity', icon: '⚽' },
     { id: 'kadin', name: 'NAR-Kadın', icon: '👩' },
     { id: 'instagram', name: 'NAR-Instagram', icon: '📸' },
-    { id: 'seyahat', name: 'NAR-Seyahat', icon: '✈️' }
+    { id: 'seyahat', name: 'NAR-Seyahat', icon: '✈️' },
+    { id: 'ilan', name: 'NAR-İlan', icon: '📋' }
   ];
 
   const openModal = (serviceId) => {
