@@ -161,19 +161,24 @@ export const handler = async (event, context) => {
     // GET /api/categories
     if (path === 'categories' && method === 'GET') {
       const categories = [
-        'Badana & Boya',
-        'Avukat',
-        'Web Tasarımcı',
-        'Tadilat & Tamirat',
-        'Elektrikçi',
-        'Tesisat',
+        'Kişisel Antrenör',
+        'Şef / Aşçıbaşı / Catering',
+        'Driver (Şoför) Hizmetleri',
+        'Çocuk & Yetişkin Bakıcılığı',
+        'Ev Yemekleri',
+        'Restoran Hizmetleri',
+        'Mali Müşavir',
+        'Doktor / Dişçi / Sağlık Danışmanı',
+        'Terzi',
+        'Fotoğrafçı',
+        'Web Tasarımcısı',
+        'Sosyal Medya Yönetimi',
         'Temizlik',
-        'Nakliyat',
-        'Bahçe Bakımı',
-        'Emlak',
-        'Fotoğrafçılık',
-        'Danışmanlık',
-        'Diğer Hizmetler'
+        'Ev İşleri',
+        'Taşıma (Moving) Hizmetleri',
+        'Pet-sitting',
+        'Öğretmen',
+        'Diğer'
       ];
       
       console.log('Categories endpoint hit');

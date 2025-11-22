@@ -54,20 +54,24 @@ function CategoryGrid({ country }) {
 
   // Kategori icon mapping
   const categoryIcons = {
-    'Badana & Boya': '🎨',
-    'Avukat': '⚖️',
-    'Web Tasarımcı': '💻',
-    'Tadilat & Tamirat': '🔧',
-    'Elektrikçi': '⚡',
-    'Tesisat': '🔧',
+    'Kişisel Antrenör': '💪',
+    'Şef / Aşçıbaşı / Catering': '👨‍🍳',
+    'Driver (Şoför) Hizmetleri': '🚗',
+    'Çocuk & Yetişkin Bakıcılığı': '👶',
+    'Ev Yemekleri': '🍲',
+    'Restoran Hizmetleri': '🍽️',
+    'Mali Müşavir': '💼',
+    'Doktor / Dişçi / Sağlık Danışmanı': '⚕️',
+    'Terzi': '🧵',
+    'Fotoğrafçı': '📷',
+    'Web Tasarımcısı': '💻',
+    'Sosyal Medya Yönetimi': '📱',
     'Temizlik': '🧹',
-    'Nakliyat': '🚚',
-    'Bahçe Bakımı': '🌳',
-    'Emlak': '🏠',
-    'Fotoğrafçılık': '📷',
-    'Danışmanlık': '👤',
-    'Diğer Hizmetler': '🧳',
-    'Diğer': '🧳'
+    'Ev İşleri': '🏠',
+    'Taşıma (Moving) Hizmetleri': '📦',
+    'Pet-sitting': '🐾',
+    'Öğretmen': '👨‍🏫',
+    'Diğer': '📋'
   };
 
   useEffect(() => {
@@ -126,19 +130,24 @@ function CategoryGrid({ country }) {
       console.error('Kategoriler yüklenemedi:', error);
       // Fallback kategoriler
       setCategories([
-        'Badana & Boya',
-        'Avukat',
-        'Web Tasarımcı',
-        'Tadilat & Tamirat',
-        'Elektrikçi',
-        'Tesisat',
+        'Kişisel Antrenör',
+        'Şef / Aşçıbaşı / Catering',
+        'Driver (Şoför) Hizmetleri',
+        'Çocuk & Yetişkin Bakıcılığı',
+        'Ev Yemekleri',
+        'Restoran Hizmetleri',
+        'Mali Müşavir',
+        'Doktor / Dişçi / Sağlık Danışmanı',
+        'Terzi',
+        'Fotoğrafçı',
+        'Web Tasarımcısı',
+        'Sosyal Medya Yönetimi',
         'Temizlik',
-        'Nakliyat',
-        'Bahçe Bakımı',
-        'Emlak',
-        'Fotoğrafçılık',
-        'Danışmanlık',
-        'Diğer Hizmetler'
+        'Ev İşleri',
+        'Taşıma (Moving) Hizmetleri',
+        'Pet-sitting',
+        'Öğretmen',
+        'Diğer'
       ]);
     }
   };
