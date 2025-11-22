@@ -459,6 +459,9 @@ function CategoryGrid({ country }) {
                   <strong> NAR sayesinde yalnızca ulaşmak istediğiniz kişilere doğrudan erişebilirsiniz.</strong> 
                   Üstelik etkinliklerinizi paylaşarak erişiminizi kat kat artırabilirsiniz.
                 </p>
+                <p>
+                  <strong>NAR – Türkleri tek bir çatı altında buluşturan uygulama!</strong>
+                </p>
               </div>
             </div>
           </div>
