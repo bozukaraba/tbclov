@@ -9,7 +9,6 @@ function Footer() {
     { id: 'oyun', name: 'NAR-Oyun', icon: '🎮' },
     { id: 'forum', name: 'NAR-Forum', icon: '💬' },
     { id: 'bilet', name: 'NAR-Bilet', icon: '🎫' },
-    { id: 'mezun', name: 'NAR-Mezun', icon: '🎓' },
     { id: 'dukkan', name: 'NAR-Dükkan', icon: '🛒' },
     { id: 'din', name: 'NAR-Din', icon: '🕌' },
     { id: 'activity', name: 'NAR-Activity', icon: '⚽' },
