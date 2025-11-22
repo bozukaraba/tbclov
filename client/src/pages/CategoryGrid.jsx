@@ -17,6 +17,9 @@ function CategoryGrid({ country }) {
   const [showStates, setShowStates] = useState(true);
   const [selectedState, setSelectedState] = useState(null);
   const [states, setStates] = useState([]);
+  
+  // Neden NAR Platform modal state
+  const [showWhyNarModal, setShowWhyNarModal] = useState(false);
 
   // Eyalet verileri
   const usaStates = [
@@ -265,6 +268,16 @@ function CategoryGrid({ country }) {
         </div>
       )}
 
+      {/* Neden NAR Platform Butonu */}
+      {!showStates && (
+        <div className="why-nar-section">
+          <button className="why-nar-btn" onClick={() => setShowWhyNarModal(true)}>
+            <span className="why-nar-icon">💡</span>
+            Neden NAR Platform?
+          </button>
+        </div>
+      )}
+
       {/* Eyalet Seçimi veya Kategoriler */}
       {showStates ? (
         <div>
@@ -415,6 +428,31 @@ function CategoryGrid({ country }) {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Neden NAR Platform Modal */}
+      {showWhyNarModal && (
+        <div className="modal-overlay" onClick={() => setShowWhyNarModal(false)}>
+          <div className="modal-content why-nar-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>
+                <span className="why-nar-modal-icon">💡</span> Neden NAR Platform?
+              </h2>
+              <button className="modal-close" onClick={() => setShowWhyNarModal(false)}>×</button>
+            </div>
+            
+            <div className="modal-body">
+              <div className="why-nar-content">
+                <p>
+                  Amerika ve Kanada'da yaşayan yüz binlerce kişiye ulaşmak artık çok kolay... 
+                  Facebook, Instagram ve WhatsApp'ta yaptığınız paylaşımlar kaybolup giderken, 
+                  <strong> NAR sayesinde yalnızca ulaşmak istediğiniz kişilere doğrudan erişebilirsiniz.</strong> 
+                  Üstelik etkinliklerinizi paylaşarak erişiminizi kat kat artırabilirsiniz.
+                </p>
+              </div>
             </div>
           </div>
         </div>

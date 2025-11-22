@@ -920,6 +920,89 @@
   box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
+/* Neden NAR Platform Section */
+.why-nar-section {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 40px;
+}
+
+.why-nar-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.why-nar-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+}
+
+.why-nar-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.why-nar-icon {
+  font-size: 24px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Neden NAR Platform Modal */
+.why-nar-modal {
+  max-width: 700px;
+}
+
+.why-nar-modal .modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.why-nar-modal .modal-header h2 {
+  color: white;
+}
+
+.why-nar-modal-icon {
+  font-size: 28px;
+  animation: pulse 2s infinite;
+}
+
+.why-nar-content {
+  padding: 20px 0;
+}
+
+.why-nar-content p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin: 0;
+  text-align: justify;
+}
+
+.why-nar-content strong {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
 @media (max-width: 600px) {
   .ad-invitation {
     min-height: 250px;
@@ -934,5 +1017,30 @@
   .apply-now-btn {
     padding: 14px 28px;
     font-size: 16px;
+  }
+
+  .why-nar-btn {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+
+  .why-nar-icon {
+    font-size: 20px;
+  }
+
+  .why-nar-content p {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .why-nar-modal-icon {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .why-nar-content p {
+    font-size: 17px;
+    line-height: 1.75;
   }
 }
