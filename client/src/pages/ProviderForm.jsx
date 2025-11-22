@@ -16,7 +16,8 @@ function ProviderForm({ country }) {
     description: '',
     serviceArea: '',
     country: country || 'USA',
-    image: null
+    image: null,
+    professionalDesign: false
   });
 
   useEffect(() => {
@@ -58,10 +59,10 @@ function ProviderForm({ country }) {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -110,7 +111,8 @@ function ProviderForm({ country }) {
         description: '',
         serviceArea: '',
         country: country || 'USA',
-        image: null
+        image: null,
+        professionalDesign: false
       });
       
       // 3 saniye sonra anasayfaya yönlendir
@@ -130,7 +132,19 @@ function ProviderForm({ country }) {
     <div className="form-container">
       <div className="form-header">
         <h1>Hizmet Sağlayıcı Başvurusu</h1>
-        <p>Bilgilerinizi doldurun, onay sonrası listeleneceksiniz</p>
+        <p>Bilgilerinizi doldurun, onay sonrası hizmetiniz yayınlanacaktır.</p>
+      </div>
+
+      {/* Fiyatlandırma Bilgisi */}
+      <div className="pricing-info">
+        <div className="pricing-card">
+          <div className="pricing-icon">💳</div>
+          <h3>Ücretsiz Başvuru</h3>
+          <p className="pricing-desc">
+            Temel profil oluşturma ve listeleme hizmeti ücretsizdir. 
+            Başvurunuz onaylandıktan sonra hizmetiniz platformda yayınlanacaktır.
+          </p>
+        </div>
       </div>
 
       {message && (
@@ -254,7 +268,7 @@ function ProviderForm({ country }) {
         </div>
 
         <div className="form-group">
-          <label className="form-label">Profil Fotoğrafı / Logo</label>
+          <label className="form-label">Profil Fotoğrafı / Reklam Görseli</label>
           <input
             type="file"
             name="image"
@@ -262,8 +276,71 @@ function ProviderForm({ country }) {
             className="form-input"
             accept="image/*"
           />
+          <div className="image-upload-info">
+            <p className="info-text">
+              📸 <strong>Profil Fotoğrafı/Logo kısmına reklam görselinizi ekleyin.</strong>
+            </p>
+            <p className="info-text">
+              🤖 İsterseniz AI ile görsel oluşturabilir ya da aşağıdaki seçenekle 
+              <strong> 10$ karşılığında profesyonel ekibimizden destek alabilirsiniz.</strong>
+            </p>
+          </div>
           <small className="form-help">Maksimum 5MB, JPG, PNG veya GIF formatında</small>
         </div>
+
+        {/* Profesyonel Tasarım Desteği Seçeneği */}
+        <div className="form-group">
+          <div className="professional-design-option">
+            <div className="design-option-header">
+              <input
+                type="checkbox"
+                id="professionalDesign"
+                name="professionalDesign"
+                checked={formData.professionalDesign}
+                onChange={handleChange}
+                className="design-checkbox"
+              />
+              <label htmlFor="professionalDesign" className="design-label">
+                <span className="design-title">🎨 Profesyonel Tasarım Desteği</span>
+                <span className="design-price">+10$</span>
+              </label>
+            </div>
+            <div className="design-description">
+              <p>
+                Profesyonel ekibimiz sizin için özel reklam görseli tasarlayacak. 
+                Markanıza uygun, dikkat çekici ve profesyonel bir görsel ile öne çıkın!
+              </p>
+              <ul className="design-features">
+                <li>✓ Özel tasarım görseli</li>
+                <li>✓ Markanıza özel renk ve stil</li>
+                <li>✓ 2 revizyon hakkı</li>
+                <li>✓ 24 saat içinde teslim</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Toplam Tutar Gösterimi */}
+        {formData.professionalDesign && (
+          <div className="payment-summary">
+            <div className="summary-row">
+              <span>Başvuru Ücreti:</span>
+              <span className="free-tag">ÜCRETSİZ</span>
+            </div>
+            <div className="summary-row">
+              <span>Profesyonel Tasarım Desteği:</span>
+              <span>$10.00</span>
+            </div>
+            <div className="summary-total">
+              <span>Toplam:</span>
+              <span className="total-amount">$10.00</span>
+            </div>
+            <p className="payment-note">
+              💳 Ödeme, başvurunuz onaylandıktan sonra email ile gönderilecek 
+              güvenli ödeme bağlantısı üzerinden yapılacaktır.
+            </p>
+          </div>
+        )}
 
         <button 
           type="submit" 
